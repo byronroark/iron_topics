@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
-  root 'home#index'
+  root 'topics#index'
+
+  resources :topics do
+    resources :interests
+    collection do
+      get :search
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
