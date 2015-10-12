@@ -4,11 +4,12 @@ Rails.application.routes.draw do
   root 'topics#index'
 
   resources :topics do
-    resources :interests
     collection do
       get :search
     end
   end
+
+  resources :interests, only: [:create]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

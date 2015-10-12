@@ -1,0 +1,31 @@
+
+<h1>Iron Topics</h1>
+
+<table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Title</td>
+      <th>Description</th>
+      <th>Focus area</th>
+      <th>Number of interests</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @topics.each do |topic| %>
+      <tr>
+        <td><%= topic.title %></td>
+        <td><%= topic.description %></td>
+        <td><%= topic.focus_area %></td>
+        <td><%= topic.interests_count %></td>
+        <td><%= link_to 'Show', topic %></td>
+        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Topic', new_topic_path %>

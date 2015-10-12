@@ -1,9 +1,13 @@
 class TopicsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_topic, only: [:show, :edit, :update]
+  before_action :set_topic, only: [:show, :edit, :update, :destroy]
+  # before_action :disallow_editing_for_topics_with_interests, only: [:edit, :update]
 
   def index
-    @topics = Topics.all
+    @topics = Topic.all.order("interests_count")
+    @topics = Topic.all.includes(:interests)
+
+    # @topics.sort_by? { |topic| topic.interests.sum(:score) }
   end
 
   def show
@@ -11,7 +15,7 @@ class TopicsController < ApplicationController
 
   def search
     @search = params[:q]
-    @topics = Topics.search(@search)
+    @topics = Topic.search(@search)
 
     render :index
   end
@@ -21,6 +25,10 @@ class TopicsController < ApplicationController
   end
 
   def edit
+    if @topic.interests.count > 0
+      redirect_to topics_path, notice: "Sorry, you can't edit this since there are already interests"
+      return
+    end
   end
 
   def create
@@ -38,7 +46,10 @@ class TopicsController < ApplicationController
   end
 
   def update
-    @topic = Topic.find(params[:id])
+    if @topic.interests.count > 0
+      redirect_to topics_path, notice: "Sorry, you can't edit this since there are already interests"
+      return
+    end
 
     respond_to do |format|
       if @topic.update(topic_params)
@@ -67,6 +78,6 @@ class TopicsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def topic_params
-    params.require(:topic).permit(:title, :description, :topic_area)
+    params.require(:topic).permit(:title, :description, :focus_area)
   end
 end

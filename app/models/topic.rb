@@ -1,5 +1,5 @@
 class Topic < ActiveRecord::Base
-  validates :topic, presence: true
+  validates :title, presence: true
   validates :focus_area, presence: true
   validates :description, presence: true
   has_many :interests

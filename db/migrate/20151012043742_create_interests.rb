@@ -3,7 +3,7 @@ class CreateInterests < ActiveRecord::Migration
     create_table :interests do |t|
       t.string :comment
       t.integer :score
-      t.integer :created_by
+      t.integer :user_id
       t.integer :topic_id
       t.timestamps null: false
     end

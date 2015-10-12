@@ -6,7 +6,6 @@
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
   </div>
 
@@ -26,5 +25,3 @@
   <i class="fa fa-lg fa-github"></i>
   <%= t('.sign_in_with_provider', provider: "github".titleize, :default => "Sign in with Github") %>
 <% end %>
-
-<%= render "devise/shared/links" %>
