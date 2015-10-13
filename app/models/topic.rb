@@ -6,6 +6,6 @@ class Topic < ActiveRecord::Base
   belongs_to :user
 
   def self.search(search)
-    where("title likes ? or description like ?", "%#{search}%", "%#{search}%")
+    where("title like ? or focus_area like ?", "%#{search}%", "%#{search}%")
   end
 end
