@@ -1,4 +1,8 @@
-
+<div class="content">
+  <% if @search %>
+    <h4>Search results for <%= @search %></h4>
+    <h5>Found <%= pluralize(@topics.count, "topic") %></h5>
+  <% end %>
 <table class="table table-condensed table-hover">
   <thead>
     <tr>
@@ -27,3 +31,4 @@
 <br>
 
 <%= link_to 'New Topic', new_topic_path %>
+</div>

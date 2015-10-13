@@ -1,3 +1,4 @@
+<div class="content">
 <p>
   <strong>Title:</strong>
   <%= @topic.title %>
@@ -12,10 +13,9 @@
   <strong>Focus area:</strong>
   <%= @topic.focus_area %>
 </p>
-
-<ul>
+<ul class="list-unstyled">
   <% @topic.interests.each do |interest| %>
-  <li><%= interest.score %> by <%= interest.user.name %> who said <%= interest.comment %></li>
+  <li><%= interest.score %> Stars by <a href="mailto:<%= interest.user.email %>"><%= interest.user.email %></a> who said <%= interest.comment %>.</li>
   <% end %>
 </ul>
 <%= form_for(@topic.interests.new) do |f| %>
@@ -34,3 +34,4 @@
 
 <%= link_to 'Edit', edit_topic_path(@topic) %> |
 <%= link_to 'Back', topics_path %>
+</div>
