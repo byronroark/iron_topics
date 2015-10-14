@@ -6,7 +6,7 @@ class TopicsController < ApplicationController
   def index
     # @topics = Topic.all.order("interests_count")
     @topics = Topic.all.includes(:interests).
-                        sort_by { |topic| topic.interests.sum(:score) }
+                        sort_by { |topic| topic.interests.sum(:score) }.reverse
   end
 
   def show
@@ -32,7 +32,7 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
-    @topic.user_id = current_user.id 
+    @topic.user_id = current_user.id
 
     respond_to do |format|
       if @topic.save
