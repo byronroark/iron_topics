@@ -6,7 +6,7 @@ class InterestsController < ApplicationController
     if @interest.valid?
       @interest.save
 
-      redirect_to root_path
+      redirect_to @interest.topic
     else
       redirect_to root_path, notice: "Oops"
     end
