@@ -15,7 +15,9 @@
         </div>
         <ul class="nav navbar-nav">
           <li><%= link_to 'Home', topics_path %></li>
+          <%- if current_user.nil? %>
           <li><%= link_to 'Sign up', new_user_registration_path %></li>
+          <% end -%>
           <% if current_user %>
             <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
           <% else %>

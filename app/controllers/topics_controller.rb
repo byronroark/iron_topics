@@ -1,13 +1,12 @@
 class TopicsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
-  # before_action :disallow_editing_for_topics_with_interests, only: [:edit, :update]
+  before_action :disallow_editing_for_topics_with_interests, only: [:edit, :update]
+  before_action :authenticate_user!
 
   def index
-    @topics = Topic.all.order("interests_count")
-    @topics = Topic.all.includes(:interests)
-
-    # @topics.sort_by? { |topic| topic.interests.sum(:score) }
+    # @topics = Topic.all.order("interests_count")
+    @topics = Topic.all.includes(:interests).
+                        sort_by { |topic| topic.interests.sum(:score) }
   end
 
   def show
@@ -33,6 +32,7 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
+    @topic.user_id = current_user.id 
 
     respond_to do |format|
       if @topic.save
@@ -79,5 +79,12 @@ class TopicsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def topic_params
     params.require(:topic).permit(:title, :description, :focus_area)
+  end
+
+  def disallow_editing_for_topics_with_interests
+    if @topic.interests.count > 0
+      redirect_to topics_path, alert: "Sorry, you can't edit this since there are already interests"
+      return
+    end
   end
 end
