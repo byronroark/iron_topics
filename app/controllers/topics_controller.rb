@@ -34,8 +34,17 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     @topic.user_id = current_user.id
 
+    # Example of Nested params/resources
+    # @topic.interests.new(score: params[:topic][:interest][:score],
+    #                      comment: params[:topic][:interest][:comment],
+    #                      user_id: current_user.id)
+
     respond_to do |format|
       if @topic.save
+        interest = @topic.interests.first
+        interest.user_id = current_user.id
+        interest.save
+
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
         format.json { render :show, status: :created, location: @topic }
       else
