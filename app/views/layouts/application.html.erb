@@ -19,11 +19,13 @@
           <li><%= link_to 'Sign up', new_user_registration_path %></li>
           <% end -%>
           <% if current_user %>
-            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
           <% else %>
-            <li><%= link_to 'Sign in', new_user_session_path %></li>
+          <li><%= link_to 'Sign in', new_user_session_path %></li>
           <% end %>
-          <%= yield :more_links %>
+          <% if current_user %>
+          <li>Logged in as <%= current_user.email %></li>
+          <% end %>
         </ul>
         <form class="navbar-form navbar-left" action="<%= search_topics_path %>" method="get">
           <div class="form-group">
