@@ -25,7 +25,7 @@
       <%= f.text_field :focus_area, class: "form_control" %>
     </div>
 
-    <%= fields_for :interest, @topic.interests.new do |i| %>
+    <%= f.fields_for :interests, @topic.interests.new do |i| %>
       <div class="field">
         <%= i.label :score %>
         <%= i.text_field :score %>

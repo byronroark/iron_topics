@@ -21,6 +21,7 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
+    @topic.interests.new
   end
 
   def edit
@@ -41,9 +42,13 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
+        # Have to put the user_id in the comment
         interest = @topic.interests.first
-        interest.user_id = current_user.id
-        interest.save
+        # Safety
+        if !interest.nil?
+          interest.user_id = current_user.id
+          interest.save
+        end
 
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
         format.json { render :show, status: :created, location: @topic }
@@ -87,7 +92,7 @@ class TopicsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def topic_params
-    params.require(:topic).permit(:title, :description, :focus_area)
+    params.require(:topic).permit(:title, :description, :focus_area, interests_attributes: [:score, :comment])
   end
 
   def disallow_editing_for_topics_with_interests
