@@ -27,8 +27,8 @@
         <div class="navbar-form navbar-left">
           <%= form_tag search_topics_path, remote: true, method: :get do %>
               <div class="form-group">
-            <%= search_field_tag :q, "", class: "form-control", placeholder: "Search" %>
-            <%= submit_tag "Submit", class: "btn btn-default" %>
+            <%= search_field_tag :q, "", class: "form-control btn-sm square_corners", placeholder: "Search" %>
+            <%= submit_tag "Submit", class: "btn btn-sm btn-default square_corners" %>
               </div>
           <% end %>
         </div>
