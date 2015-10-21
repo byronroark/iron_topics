@@ -1,21 +1,21 @@
 
-<div class="col-xs-5 col-centered">
-  <div class="panel panel-default">
+<div class="col-xs-6 col-centered">
+  <div class="panel panel-default square_corners">
     <div class="panel-heading">
       <h4><%= t('.sign_up', :default => "Sign up") %></h4>
     </div>
     <div class="panel-body">
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { role: "form" }) do |f| %>
         <div class="form-group">
-          <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+          <%= f.email_field :email, autofocus: true, class: "form-control square_corners", placeholder: "Email" %>
         </div>
         <div class="form-group">
-          <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+          <%= f.password_field :password, class: "form-control square_corners", placeholder: "Password" %>
         </div>
         <div class="form-group">
-          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm password" %>
+          <%= f.password_field :password_confirmation, class: "form-control square_corners", placeholder: "Confirm password" %>
         </div>
-        <%= f.submit t('.sign_in', :default => "Sign up"), class: "btn btn-primary" %>
+        <%= f.submit t('.sign_in', :default => "Sign up"), class: "btn btn-sm btn-primary square_corners" %>
         <%- if controller_name != 'sessions' %>
         <span> Already have an account? <%= link_to t(".sign_in", :default => "Sign in"), new_session_path(resource_name) %>
         <% end -%></span>
