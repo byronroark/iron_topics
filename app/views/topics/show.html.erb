@@ -4,6 +4,12 @@
   <%= @topic.title %>
 </p>
 
+<% if @topic.google_results %>
+  <%= @topic.google_results.html_safe %>
+<% else %>
+  No google results yet!
+<% end %>
+
 <p>
   <strong>Description:</strong>
   <%= @topic.description %>
@@ -13,6 +19,8 @@
   <strong>Focus area:</strong>
   <%= @topic.focus_area %>
 </p>
+
+<%= select_tag(:interest_score), options_for_select([[1,1],[2,2][3,3],[4,4],[5,5]]), data: {"topic_id" => @topic.id }); %>
 
 <div class="input-group">
 <%= form_for(Interest.new, remote: true) do |f| %>

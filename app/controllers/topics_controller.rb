@@ -2,6 +2,8 @@ class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :disallow_editing_for_topics_with_interests, only: [:edit, :update]
   before_action :authenticate_user!
+  # Global capture/rescue
+  # rescue_from ActiveRecord::RecordNotFound, with: :topic_doesnt_exist
 
   def index
     # @topics = Topic.all.order("interests_count")
@@ -10,6 +12,9 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @topic = Topic.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to topics_path, notice: "Sorry, this topic does not exist."
   end
 
   def search
@@ -42,6 +47,8 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
+        GoogleSearchTopic.perform_async(@topic.id)
+        
         # Have to put the user_id in the comment
         interest = @topic.interests.first
         # Safety
